@@ -1,0 +1,65 @@
+name: "SAST Scan"
+
+on:
+  schedule:
+    - cron: '0 3 15 * *'  # Monthly on the 15th at 3 AM UTC
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  sast:
+    name: SAST Security Scan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install security tools
+      run: npm install -g eslint eslint-plugin-security
+
+    - name: Run ESLint Security Plugin on Backend
+      run: |
+        cd backend
+        npx eslint . --ext .js,.ts --plugin security --rule 'security/detect-object-injection: error' --rule 'security/detect-eval-with-expression: error' --rule 'security/detect-non-literal-regexp: error' --rule 'security/detect-possible-timing-attacks: error' --rule 'security/detect-buffer-noassert: error' --rule 'security/detect-child-process: error' --rule 'security/detect-disable-mustache-escape: error' --rule 'security/detect-eval-with-expression: error' --rule 'security/detect-new-buffer: error' --rule 'security/detect-no-csrf-before-method-override: error' --rule 'security/detect-non-literal-fs-filename: error' --rule 'security/detect-non-literal-require: error' --rule 'security/detect-unsafe-regex: error' || true
+
+    - name: Run ESLint Security Plugin on Frontend
+      run: |
+        cd frontend
+        npx eslint . --ext .js,.ts,.jsx,.tsx --plugin security --rule 'security/detect-object-injection: error' --rule 'security/detect-eval-with-expression: error' --rule 'security/detect-non-literal-regexp: error' --rule 'security/detect-possible-timing-attacks: error' || true
+
+    - name: Run ESLint Security Plugin on CRM Admin
+      run: |
+        cd crm-admin
+        npx eslint . --ext .js,.ts,.jsx,.tsx --plugin security --rule 'security/detect-object-injection: error' --rule 'security/detect-eval-with-expression: error' --rule 'security/detect-non-literal-regexp: error' --rule 'security/detect-possible-timing-attacks: error' || true
+
+    - name: Install njsscan for Node.js security scanning
+      run: |
+        pip install njsscan
+
+    - name: Run njsscan on Backend
+      run: |
+        cd backend
+        njsscan . --json > njsscan-results.json || true
+        if [ -s njsscan-results.json ]; then
+          echo "njsscan found potential security issues in backend"
+          cat njsscan-results.json
+        else
+          echo "✅ njsscan found no issues in backend"
+        fi
+
+    - name: Comment on PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🔒 **SAST Security Scan Completed**\n\n- ESLint security rules checked\n- njsscan static analysis completed\n- Review results above for any security findings'
+          })

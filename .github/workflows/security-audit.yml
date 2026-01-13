@@ -1,0 +1,63 @@
+name: "Security Audit"
+
+on:
+  schedule:
+    - cron: '0 2 1 * *'  # Monthly on the 1st at 2 AM UTC
+  workflow_dispatch:  # Allow manual triggering
+  release:
+    types: [published]  # Run on releases
+
+jobs:
+  audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Audit Backend Dependencies
+      run: |
+        cd backend
+        npm audit --audit-level=moderate --json > audit-results.json || true
+        if [ -s audit-results.json ]; then
+          echo "Security vulnerabilities found in backend"
+          cat audit-results.json
+          exit 1
+        else
+          echo "No security vulnerabilities found in backend"
+        fi
+
+    - name: Audit Frontend Dependencies
+      run: |
+        cd frontend
+        npm audit --audit-level=moderate --json > audit-results.json || true
+        if [ -s audit-results.json ]; then
+          echo "Security vulnerabilities found in frontend"
+          cat audit-results.json
+          exit 1
+        else
+          echo "No security vulnerabilities found in frontend"
+        fi
+
+    - name: Audit CRM Admin Dependencies
+      run: |
+        cd crm-admin
+        npm audit --audit-level=moderate --json > audit-results.json || true
+        if [ -s audit-results.json ]; then
+          echo "Security vulnerabilities found in crm-admin"
+          cat audit-results.json
+          exit 1
+        else
+          echo "No security vulnerabilities found in crm-admin"
+        fi

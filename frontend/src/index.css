@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+@import "tw-animate-css";
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  }
+}
+
+:root {
+  /* Ventus Invest Theme Colors */
+  --background: oklch(0.98 0.002 240);
+  --foreground: oklch(0.25 0.02 240);
+
+  --card: oklch(0.99 0.001 240);
+  --card-foreground: oklch(0.25 0.02 240);
+  --popover: oklch(0.99 0.001 240);
+  --popover-foreground: oklch(0.25 0.02 240);
+
+  /* Primary - Dark Anthracite */
+  --primary: oklch(0.25 0.02 240);
+  --primary-foreground: oklch(0.98 0.002 240);
+
+  /* Secondary - Light Gray */
+  --secondary: oklch(0.96 0.005 240);
+  --secondary-foreground: oklch(0.25 0.02 240);
+
+  /* Muted variants */
+  --muted: oklch(0.96 0.005 240);
+  --muted-foreground: oklch(0.55 0.01 240);
+
+  /* Accent - Warm Blue */
+  --accent: oklch(0.65 0.15 220);
+  --accent-foreground: oklch(0.98 0.002 240);
+
+  /* Destructive for sold/unavailable */
+  --destructive: oklch(0.62 0.20 15);
+  --destructive-foreground: oklch(0.98 0.002 240);
+
+  /* UI Elements */
+  --border: oklch(0.90 0.005 240);
+  --input: oklch(0.94 0.005 240);
+  --ring: oklch(0.65 0.15 220);
+
+  /* Chart colors for statistics */
+  --chart-1: oklch(0.65 0.15 220);
+  --chart-2: oklch(0.72 0.12 180);
+  --chart-3: oklch(0.68 0.18 140);
+  --chart-4: oklch(0.75 0.15 60);
+  --chart-5: oklch(0.70 0.20 300);
+
+  /* Radius for soft, modern feel */
+  --radius: 0.75rem;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.33);
+  --radius-xl: calc(var(--radius) * 1.75);
+  --radius-2xl: calc(var(--radius) * 2.5);
+  --radius-full: 9999px;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Smooth focus transitions */
+*:focus {
+  transition: box-shadow 0.2s ease-out;
+}
+
+/* Progress bar animation for Hero section */
+@keyframes progress-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-progress-bar {
+  animation: progress-bar 8s linear;
+}

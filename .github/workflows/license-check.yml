@@ -1,0 +1,59 @@
+name: "License Check"
+
+on:
+  schedule:
+    - cron: '0 4 1 * *'  # Monthly on the 1st at 4 AM UTC
+  workflow_dispatch:  # Allow manual triggering
+  release:
+    types: [published]  # Run on releases
+
+jobs:
+  license-check:
+    name: Check Licenses
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install license-checker
+      run: npm install -g license-checker
+
+    - name: Check Backend Licenses
+      run: |
+        cd backend
+        license-checker --production --json > licenses.json
+        # Check for problematic licenses
+        if grep -q -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json; then
+          echo "⚠️  Found potentially problematic licenses in backend"
+          grep -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json
+        else
+          echo "✅ All backend licenses look good"
+        fi
+
+    - name: Check Frontend Licenses
+      run: |
+        cd frontend
+        license-checker --production --json > licenses.json
+        if grep -q -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json; then
+          echo "⚠️  Found potentially problematic licenses in frontend"
+          grep -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json
+        else
+          echo "✅ All frontend licenses look good"
+        fi
+
+    - name: Check CRM Admin Licenses
+      run: |
+        cd crm-admin
+        license-checker --production --json > licenses.json
+        if grep -q -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json; then
+          echo "⚠️  Found potentially problematic licenses in crm-admin"
+          grep -E "(GPL|LGPL|MS-PL|BSD-4-Clause|CC-BY-NC)" licenses.json
+        else
+          echo "✅ All crm-admin licenses look good"
+        fi

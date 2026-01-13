@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+
+
+volumes:
+  mongodb_data:
+
+networks:
+  realestate_network:
+    driver: bridge

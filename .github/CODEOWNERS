@@ -1,0 +1,27 @@
+# Code owners for security and critical components
+# When a PR modifies these files, the listed owners will be automatically requested for review
+
+# Security-related files
+SECURITY.md @szymon-tulodziecki
+.github/workflows/codeql-analysis.yml @szymon-tulodziecki
+.github/workflows/security-audit.yml @szymon-tulodziecki
+.github/workflows/dependency-review.yml @szymon-tulodziecki
+.github/dependabot.yml @szymon-tulodziecki
+
+
+# Backend security
+backend/package.json @szymon-tulodziecki
+backend/package-lock.json @szymon-tulodziecki
+backend/controllers/authController.js @szymon-tulodziecki
+backend/middleware/security.js @szymon-tulodziecki
+backend/config/database.js @szymon-tulodziecki
+
+# Environment files (sensitive)
+/.env.example @szymon-tulodziecki
+
+# Docker security
+Dockerfile @szymon-tulodziecki
+docker-compose*.yml @szymon-tulodziecki
+
+# Global owners (review all changes)
+* @szymon-tulodziecki

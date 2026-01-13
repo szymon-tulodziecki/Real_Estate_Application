@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/node": "^24.9.2"
+  },
+  "dependencies": {
+    "csurf": "^1.11.0",
+    "express-mongo-sanitize": "^2.2.0"
+  }
+}

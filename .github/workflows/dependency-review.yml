@@ -1,0 +1,26 @@
+name: "Dependency Review"
+
+on:
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Dependency Review
+      uses: actions/dependency-review-action@v4
+      with:
+        # Optional: add configuration for allowed licenses
+        # license-check: true
+        # allow-licenses: MIT, Apache-2.0, BSD-3-Clause
+        vulnerability-check: true
+        base-ref: 'main'
+        head-ref: '${{ github.event.pull_request.head.sha }}'

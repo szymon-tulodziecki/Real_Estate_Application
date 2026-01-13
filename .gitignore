@@ -1,0 +1,53 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Logs
+logs
+*.log
+
+# dotenv environment variables
+.env
+.env.*
+!.env.example
+
+# SECURITY: Hasła do baz danych
+passwords
+passwords.txt
+passwords.md
+
+# Build output
+/dist
+/build
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Coverage
+coverage/
+
+# Uploads
+backend/uploads/
+
+# Misc
+*.tgz
+.idea/
+
+# Frontend build
+frontend/build/
+frontend/node_modules/
+
+# Backend build
+backend/node_modules/
+
+# Docker
+*.pid
+
+# Local Netlify folder
+.netlify
