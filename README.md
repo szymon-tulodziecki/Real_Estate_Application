@@ -156,8 +156,9 @@ real-estate-crm/
 Aby wypełnić bazę przykładowymi danymi:
 
 ```bash
-cd backend
-npm run seed
+cd backend/scripts/
+
+npm run seed.js
 ```
 
 Domyślne konta:
