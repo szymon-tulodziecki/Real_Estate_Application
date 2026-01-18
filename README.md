@@ -186,6 +186,17 @@ MIT License - zobacz [LICENSE](LICENSE) plik dla szczegółów.
 
 Pull requesty są mile widziane! Proszę przeczytać [CONTRIBUTING.md](CONTRIBUTING.md) przed rozpoczęciem pracy.
 
+## Zrzuty ekranu
+
+W folderze ./img znajdują się zrzuty ekranu z systemu.
+
+**CRM Admin (pliki 1–5):**  
+![CRM Admin 1](img/img_1.png) ![CRM Admin 2](img/img_2.png) ![CRM Admin 3](img/img_3.png) ![CRM Admin 4](img/img_4.png) ![CRM Admin 5](img/img_5.png)
+
+**Frontend (pozostałe):**  
+Pliki `img/img_6.png` … `img/img_12.png` to zrzuty aplikacji frontend (klient):  
+![Frontend 6](img/img_6.png) ![Frontend 7](img/img_7.png) ![Frontend 8](img/img_8.png) ![Frontend 9](img/img_9.png) ![Frontend 10](img/img_10.png) ![Frontend 11](img/img_11.png) ![Frontend 12](img/img_12.png)
+
 ## Kontakt
 
 Dla pytań lub wsparcia, otwórz issue na GitHub.
